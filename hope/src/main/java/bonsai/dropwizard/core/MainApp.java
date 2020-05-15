@@ -6,13 +6,17 @@ import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.DbConfig;
 import bonsai.dropwizard.MetricUtils;
 import bonsai.dropwizard.MetricsRequestFilter;
-import bonsai.dropwizard.dao.*;
+import bonsai.dropwizard.dao.DBConfigEntry;
+import bonsai.dropwizard.dao.DBConfigEntryDAO;
+import bonsai.dropwizard.dao.KeyValueItem;
+import bonsai.dropwizard.dao.KeyValueItemDAO;
 import bonsai.dropwizard.dao.d.*;
-import bonsai.dropwizard.resources.*;
+import bonsai.dropwizard.resources.Admin;
+import bonsai.dropwizard.resources.DataturksAPIEndPoint;
+import bonsai.dropwizard.resources.DataturksEndpoint;
 import bonsai.email.ScheduledEmails;
 import com.codahale.metrics.servlets.MetricsServlet;
 import dataturks.aws.S3Handler;
-import dataturks.jobs.LabelCounts;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -160,7 +164,7 @@ public class MainApp extends Application<DbConfig> {
     }
 
     protected class EnableCors {
-        private Environment environment;
+        private final Environment environment;
 
         public EnableCors(Environment environment) {
             this.environment = environment;

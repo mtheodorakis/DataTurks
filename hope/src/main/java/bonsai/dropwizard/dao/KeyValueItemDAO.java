@@ -1,7 +1,8 @@
 package bonsai.dropwizard.dao;
 
 import io.dropwizard.hibernate.AbstractDAO;
-import org.hibernate.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.context.internal.ManagedSessionContext;
 
 import java.util.List;

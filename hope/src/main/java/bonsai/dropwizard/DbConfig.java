@@ -20,7 +20,7 @@ public class DbConfig extends Configuration{
      */
     @NotNull
     @Valid
-    private DataSourceFactory dataSourceFactory
+    private final DataSourceFactory dataSourceFactory
             = new DataSourceFactory();
     /**
      * A getter for the database factory.

@@ -1,25 +1,21 @@
 package bonsai.Utils;
 
 import bonsai.Constants;
-import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.dao.d.DUsers;
-import bonsai.security.FirebaseSignIn;
 import com.amazonaws.util.IOUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.repackaged.com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Entities;
 import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -325,7 +321,7 @@ public class CommonUtils {
 
         try {
             writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(filepath), "utf-8"));
+                    new FileOutputStream(filepath), StandardCharsets.UTF_8));
             for (String line : lines) {
                 writer.write(line + "\n");
             }
@@ -413,7 +409,7 @@ public class CommonUtils {
                 "<br/>" +
                 "< strong> wassup 500&pound; < /strong>&");
         str = handleHTMLEntities("whta is <ab going on in the life of\n biy who\n plays cricket<a></a>");
-        if (true) return;;
+        if (true) return;
         DUsers users = new DUsers();
         users.setOAuthType("google.com");
         users.setFirstName("nvv.xy");

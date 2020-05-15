@@ -13,8 +13,8 @@ import java.util.Set;
 public class Refresher {
 
     private static final Logger LOG = LoggerFactory.getLogger(Refresher.class);
-    private static Refresher instance = new Refresher();
-    private Set<Reloadable> reloadableSet;
+    private static final Refresher instance = new Refresher();
+    private final Set<Reloadable> reloadableSet;
     private Refresher(){
         reloadableSet = new HashSet<Reloadable>();
     }
@@ -28,16 +28,12 @@ public class Refresher {
     }
 
     public static void register(Reloadable reloadable) {
-        if (!getSet().contains(reloadable)) {
-            getSet().add(reloadable);
-        }
+        getSet().add(reloadable);
 
     }
 
     public static void unregister(Reloadable reloadable) {
-        if (getSet().contains(reloadable)) {
-            getSet().remove(reloadable);
-        }
+        getSet().remove(reloadable);
     }
 
     public static void refresh() {

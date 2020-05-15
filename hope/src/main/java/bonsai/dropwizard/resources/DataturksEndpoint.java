@@ -5,12 +5,12 @@ import bonsai.Utils.CommonUtils;
 import bonsai.Utils.UploadFileUtil;
 import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
-import bonsai.dropwizard.MetricUtils;
-import bonsai.dropwizard.dao.d.*;
+import bonsai.dropwizard.dao.d.DOrgs;
+import bonsai.dropwizard.dao.d.DProjects;
+import bonsai.dropwizard.dao.d.DUsers;
 import bonsai.email.EmailSender;
 import bonsai.sa.EventsLogger;
 import bonsai.security.LoginAuth;
-import com.codahale.metrics.Timer;
 import dataturks.*;
 import dataturks.cache.CacheWrapper;
 import dataturks.license.LicenseHandler;
@@ -26,10 +26,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -159,7 +161,7 @@ public class DataturksEndpoint {
 
         LoginAuth.validateAndGetDataturksUserIdElseThrowException(id, token);
 
-        String regStr = "deleteProject: " +  projectId.toString();
+        String regStr = "deleteProject: " + projectId;
         LOG.info(regStr);
 
         try {
@@ -190,7 +192,7 @@ public class DataturksEndpoint {
 
         LoginAuth.validateAndGetDataturksUserIdElseThrowException(id, token);
 
-        String regStr = "updateProject: " +  projectId.toString();
+        String regStr = "updateProject: " + projectId;
         LOG.info(regStr);
 
         try {
@@ -584,7 +586,7 @@ public class DataturksEndpoint {
             }
 
             response =  getProjectStatsInternal(reqObj, projectId);
-            
+
             CacheWrapper.addProjectStats(reqObj, projectId, response);
             return response;
         }
@@ -628,7 +630,7 @@ public class DataturksEndpoint {
         LoginAuth.validateAndGetDataturksUserIdElseThrowException(id, token);
 
         boolean cacheEnabled = cache == null;
-        String reqLogStr = "getOrgProjects: uid= " +  id.toString() + " orgId = " + orgId + " orgName=" + orgName;
+        String reqLogStr = "getOrgProjects: uid= " + id + " orgId = " + orgId + " orgName=" + orgName;
         LOG.info(reqLogStr);
 
         DReqObj reqObj =null;

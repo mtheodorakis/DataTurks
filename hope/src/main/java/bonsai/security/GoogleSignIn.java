@@ -1,11 +1,9 @@
 package bonsai.security;
 
-import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +15,7 @@ import java.util.Collections;
  */
 public class GoogleSignIn {
 
-    private static Logger LOG = LoggerFactory.getLogger(GoogleSignIn.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GoogleSignIn.class);
     private static final JacksonFactory jacksonFactory = new JacksonFactory();
 
     public static final String Google_OAuth_Client_Id_Debug = "785673736022-c68gmbvhqbq24a5jd7j4vsipi4ab9jh4.apps.googleusercontent.com";

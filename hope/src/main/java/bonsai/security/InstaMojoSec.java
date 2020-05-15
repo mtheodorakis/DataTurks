@@ -1,7 +1,6 @@
 package bonsai.security;
 
 import bonsai.Constants;
-import bonsai.config.DBBasedConfigs;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import com.mashape.unirest.http.HttpResponse;
@@ -9,7 +8,6 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +22,7 @@ public class InstaMojoSec {
         accessTokens = CacheBuilder.newBuilder().maximumSize(10).refreshAfterWrite(35550, TimeUnit.SECONDS).build(new SecKeyLoader());
     }
 
-    private static InstaMojoSec instaMojoSec = new InstaMojoSec();
+    private static final InstaMojoSec instaMojoSec = new InstaMojoSec();
 
     public static InstaMojoSec getInstance() {
         return instaMojoSec;

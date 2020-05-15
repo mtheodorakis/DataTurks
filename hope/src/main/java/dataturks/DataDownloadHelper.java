@@ -176,10 +176,10 @@ public class DataDownloadHelper {
 
             ArrayNode rootNode = (ArrayNode) root;
             for (JsonNode node : rootNode) {
-                JsonNode pointNode = ((ArrayNode) node.get("points")).get(0);
+                JsonNode pointNode = node.get("points").get(0);
                 NEREntityItem item = new NEREntityItem(pointNode.get("start").intValue(),
                         pointNode.get("end").intValue(),
-                        pointNode.get("text").textValue(), ((ArrayNode)node.get("label")).get(0).textValue());
+                        pointNode.get("text").textValue(), node.get("label").get(0).textValue());
                 NEREntityItems.add(item);
             }
             //sort the NER items by the start location.

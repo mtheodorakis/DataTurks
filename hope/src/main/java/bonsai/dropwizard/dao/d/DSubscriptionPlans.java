@@ -1,7 +1,5 @@
 package bonsai.dropwizard.dao.d;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 

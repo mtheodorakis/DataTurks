@@ -1,7 +1,6 @@
 package dataturks.response;
 
 import java.util.List;
-import java.util.Map;
 
 public class TextSummarizationStats {
     private long totalWords; //as present in the data.

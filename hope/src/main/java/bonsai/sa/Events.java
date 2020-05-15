@@ -8,8 +8,8 @@ import java.util.Map;
  */
 public class Events {
 
-    private Map<String, Integer> errorEvents;
-    private Map<String, Integer> events;
+    private final Map<String, Integer> errorEvents;
+    private final Map<String, Integer> events;
 
     public Events() {
         errorEvents = new HashMap<>();

@@ -3,7 +3,6 @@ package dataturks.cache;
 import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.dao.d.DUsers;
 import dataturks.DReqObj;
-import dataturks.jobs.TopProjects;
 import dataturks.response.OrgProjects;
 import dataturks.response.ProjectStats;
 import dataturks.response.UserHome;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 //handles key generation/object casting  etc.
 public class CacheWrapper {
-    private static Logger LOG = LoggerFactory.getLogger(CacheWrapper.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CacheWrapper.class);
 
     //reset the caches when a project is created/deleted.
     public static void updateProjectCreateDelete(DReqObj reqObj, String orgId) {

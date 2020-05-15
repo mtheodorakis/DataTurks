@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.collect.MinMaxPriorityQueue;
-import com.google.gson.JsonArray;
 import dataturks.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

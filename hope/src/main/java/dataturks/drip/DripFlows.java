@@ -3,7 +3,6 @@ package dataturks.drip;
 import bonsai.dropwizard.dao.d.DProjectInvites;
 import bonsai.dropwizard.dao.d.DProjects;
 import bonsai.dropwizard.dao.d.DUsers;
-import bonsai.email.ScheduledEmails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

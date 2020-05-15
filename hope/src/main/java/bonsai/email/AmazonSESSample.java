@@ -1,12 +1,13 @@
 package bonsai.email;
 
 
-import java.io.IOException;
-
 import bonsai.Utils.CommonUtils;
-import com.amazonaws.services.simpleemail.*;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simpleemail.model.*;
-import com.amazonaws.regions.*;
+
+import java.io.IOException;
 
 public class AmazonSESSample {
 
@@ -365,7 +366,7 @@ public class AmazonSESSample {
     public static void main(String[] args) throws IOException {
 
         // Construct an object to contain the recipient address.
-        Destination destination = new Destination().withToAddresses(new String[] { TO });
+        Destination destination = new Destination().withToAddresses(TO);
 
         // Create the subject and body of the message.
         Content subject = new Content().withData(SUBJECT);

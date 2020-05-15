@@ -2,8 +2,6 @@ package dataturks.cache;
 
 import bonsai.Utils.CommonUtils;
 import bonsai.config.DBBasedConfigs;
-import bonsai.dropwizard.dao.DBConfigEntry;
-import bonsai.dropwizard.dao.DBConfigEntryDAO;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -15,9 +13,6 @@ import dataturks.response.OrgProjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,18 +20,18 @@ import java.util.concurrent.TimeUnit;
 
 public class CachedItems {
 
-    private static Logger LOG = LoggerFactory.getLogger(TopProjects.class);
-    private static CachedItems instance = new CachedItems();
+    private static final Logger LOG = LoggerFactory.getLogger(TopProjects.class);
+    private static final CachedItems instance = new CachedItems();
 
-    private LoadingCache<String, Object> cache;
-    private Cache<String, Object> keyValueStore; //non-loading cache.
+    private final LoadingCache<String, Object> cache;
+    private final Cache<String, Object> keyValueStore; //non-loading cache.
 
 
     public static CachedItems getInstance() {
         return instance;
     }
 
-    private static String KEY_TOP_PROJECTS = "topProjects";
+    private static final String KEY_TOP_PROJECTS = "topProjects";
 
     private CachedItems() {
         cache = CacheBuilder.newBuilder().maximumSize(100l).refreshAfterWrite(60*4, TimeUnit.MINUTES).build(new CacheLoaderInternal());
@@ -82,7 +77,7 @@ public class CachedItems {
 
     private static class CacheLoaderInternal extends CacheLoader<String, Object> {
 
-        private static ExecutorService executors = Executors.newFixedThreadPool(1);
+        private static final ExecutorService executors = Executors.newFixedThreadPool(1);
 
         private Object getData(String key) {
             LOG.info("Calling getData method for CachedItems for key " + key + "..");

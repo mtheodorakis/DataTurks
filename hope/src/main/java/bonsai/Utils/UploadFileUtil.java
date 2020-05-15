@@ -2,7 +2,6 @@ package bonsai.Utils;
 
 import bonsai.Constants;
 import bonsai.config.DBBasedConfigs;
-import dataturks.DConstants;
 import dataturks.DReqObj;
 import dataturks.DTypes;
 import dataturks.fileFormats.ZipHandler;
@@ -20,7 +19,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,8 +27,8 @@ public class UploadFileUtil {
     private static final Logger LOG = LoggerFactory.getLogger(UploadFileUtil.class);
     public static final int BUFFER_SIZE = 1024*1024;
 
-    private static UploadFileUtil instance = new UploadFileUtil();
-    private Tika tika;
+    private static final UploadFileUtil instance = new UploadFileUtil();
+    private final Tika tika;
 
     private UploadFileUtil(){
         tika = new Tika();

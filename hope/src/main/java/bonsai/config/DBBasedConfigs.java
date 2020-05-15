@@ -1,9 +1,7 @@
 package bonsai.config;
 
 import bonsai.DB.Refresher;
-
 import bonsai.Utils.CommonUtils;
-
 import bonsai.dropwizard.dao.DBConfigEntry;
 import bonsai.dropwizard.dao.DBConfigEntryDAO;
 import bonsai.interfaces.Reloadable;
@@ -16,7 +14,10 @@ import com.google.common.util.concurrent.ListenableFutureTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,7 +30,7 @@ public class DBBasedConfigs implements Reloadable {
     private static final Logger LOG = LoggerFactory.getLogger(DBBasedConfigs.class);
     private static final String key = "DBConfigsKey";
 
-    private static DBBasedConfigs instance = new DBBasedConfigs();
+    private static final DBBasedConfigs instance = new DBBasedConfigs();
 
     // Contains merchant Name  ---> info (the info if has a regex, we do matching based on regexmatch in a loop).
     private LoadingCache<String, Map<String, Object>> configs;
@@ -97,13 +98,13 @@ public class DBBasedConfigs implements Reloadable {
 
     private static class DBConfigLoader extends CacheLoader<String, Map<String, Object>> {
 
-        private ObjectMapper objectMapper = new ObjectMapper();
-        private DBConfigEntryDAO dbConfigEntryDAO;
+        private final ObjectMapper objectMapper = new ObjectMapper();
+        private final DBConfigEntryDAO dbConfigEntryDAO;
         public DBConfigLoader(DBConfigEntryDAO dbConfigEntryDAO) {
             this.dbConfigEntryDAO = dbConfigEntryDAO;
         }
 
-        private static ExecutorService executors = Executors.newFixedThreadPool(1);
+        private static final ExecutorService executors = Executors.newFixedThreadPool(1);
 
         @Override
         public  Map<String, Object> load(String key) throws Exception {

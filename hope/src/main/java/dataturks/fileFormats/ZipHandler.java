@@ -1,7 +1,5 @@
 package dataturks.fileFormats;
 
-import dataturks.DTypes;
-import dataturks.DataUploadHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

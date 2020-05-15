@@ -2,9 +2,7 @@ package dataturks.jobs;
 
 import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
-import bonsai.dropwizard.dao.DBConfigEntry;
 import bonsai.dropwizard.dao.d.*;
-import bonsai.email.ScheduledEmails;
 import dataturks.*;
 import dataturks.license.LicenseHandler;
 import dataturks.response.*;
@@ -18,10 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 public class LabelCounts {
 
-    private static Logger LOG = LoggerFactory.getLogger(LabelCounts.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LabelCounts.class);
     private ScheduledExecutorService executorService;
 
-    private static LabelCounts instance = new LabelCounts();
+    private static final LabelCounts instance = new LabelCounts();
 
     private LabelCounts(){
         resetSchedule();
@@ -124,7 +122,7 @@ public class LabelCounts {
     private static long getLabelCountsForProject(DProjects project) {
 
         DReqObj reqObj = new DReqObj(DConstants.NON_LOGGED_IN_USER_ID);
-        ProjectStats stats = Controlcenter.getProjectStatsForHITStatus(reqObj, project, Arrays.asList(new String[] {DConstants.HIT_STATUS_DONE}));
+        ProjectStats stats = Controlcenter.getProjectStatsForHITStatus(reqObj, project, Arrays.asList(DConstants.HIT_STATUS_DONE));
         long count = 0;
         if (stats != null) {
             if (stats.getPosTaggingStats() != null || stats.getDocumentTaggingStats() != null) {

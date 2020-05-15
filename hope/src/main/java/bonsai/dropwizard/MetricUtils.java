@@ -7,8 +7,6 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
-import com.codahale.metrics.graphite.GraphiteSender;
-import com.codahale.metrics.graphite.PickledGraphite;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;

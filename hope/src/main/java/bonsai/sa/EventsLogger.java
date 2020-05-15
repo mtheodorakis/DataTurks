@@ -5,7 +5,9 @@ import bonsai.email.EmailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,7 +34,7 @@ public class EventsLogger {
     private ScheduledExecutorService executorService;
     private int intervalInSec;
 
-    private static EventsLogger instance = new EventsLogger();
+    private static final EventsLogger instance = new EventsLogger();
 
     private EventsLogger(){
         sinceReStart = new Events();
@@ -46,7 +48,7 @@ public class EventsLogger {
 
     public static void  logErrorEvent(String eventName, int value) {
         try {
-            getInstance().current.addError(eventName, value);
+            current.addError(eventName, value);
         }
         catch (Exception e) {
             LOG.error(e.toString());
@@ -55,7 +57,7 @@ public class EventsLogger {
 
     public static void  logEvent(String eventName, int value) {
         try {
-            getInstance().current.add(eventName, value);
+            current.add(eventName, value);
         }
         catch (Exception e) {
             LOG.error(e.toString());

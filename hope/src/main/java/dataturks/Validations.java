@@ -1,6 +1,5 @@
 package dataturks;
 
-import bonsai.Constants;
 import bonsai.Utils.UploadFileUtil;
 import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
@@ -8,12 +7,10 @@ import bonsai.dropwizard.dao.d.DAPIKeys;
 import bonsai.dropwizard.dao.d.DProjects;
 import bonsai.dropwizard.dao.d.DSubscriptionPlans;
 import bonsai.dropwizard.dao.d.DSubscriptions;
-import bonsai.dropwizard.resources.DataturksAPIEndPoint;
 import bonsai.email.EmailSender;
 import bonsai.exceptions.AuthException;
 import bonsai.sa.EventsLogger;
 import dataturks.response.ProjectDetails;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,11 +93,7 @@ public class Validations {
     public static boolean isValidDataItemForTextTask(String line, DReqObj reqObj) {
         long maxLength = reqObj.getConfigs().maxHitDataLength;
 
-        if (line != null && !line.isEmpty() && line.length() < maxLength) {
-            return true;
-        }
-
-        return  false;
+        return line != null && !line.isEmpty() && line.length() < maxLength;
     }
 
     public static boolean isValidDataItemFromFileForTextTask(String filepath, DReqObj reqObj) {
@@ -135,27 +128,19 @@ public class Validations {
 
     public static boolean isDataturksAdminUser(String uid) {
         List<String> adminId = DBBasedConfigs.getConfig("dtAdminUsers", List.class, Collections.emptyList());
-        if (adminId.contains(uid)) {
-            return true;
-        }
-        return false;
+        return adminId.contains(uid);
     }
 
 
     // if the labels done has exceeded or the date has expired.
     public static boolean hasSubscriptionExpired(DOrgConfigs config, DSubscriptions subscriptions){
         if (subscriptions != null && config != null) {
-            if (subscriptions.getLabelsDone() >= config.getNumLabelsAllowed() ||
-                    (subscriptions.getValidTill() != null && (new Date()).after(subscriptions.getValidTill()) )) {
-
-                return true;
-            }
+            return subscriptions.getLabelsDone() >= config.getNumLabelsAllowed() ||
+                    (subscriptions.getValidTill() != null && (new Date()).after(subscriptions.getValidTill()));
         }
         else {
             return true;
         }
-
-       return false;
     }
 
     public static boolean hasSubscriptionExpired(String orgId){
@@ -170,23 +155,14 @@ public class Validations {
         if (Validations.isPaidPlanOrg(projectDetails.getOrgId())) {
             //even for some private plans like university etc, we do not allow deleted.
             DOrgConfigs orgConfigs = getOrgConfigs(projectDetails.getOrgId());
-            if (orgConfigs == null || orgConfigs.isProjectDeleteAllowed()) {
-                return true;
-            }
+            return orgConfigs == null || orgConfigs.isProjectDeleteAllowed();
         }
 
-        else if (projectDetails.getTotalHitsDone() < DBBasedConfigs.getConfig("dHitsDoneThresholdForProjectDelete", Long.class, 50l)) {
-            return true;
-        }
-
-        return false;
+        else return projectDetails.getTotalHitsDone() < DBBasedConfigs.getConfig("dHitsDoneThresholdForProjectDelete", Long.class, 50l);
     }
 
     public static boolean isDeleted(DProjects project) {
-        if (DTypes.Project_Status.DELETED.toString().equalsIgnoreCase(project.getStatus())) {
-            return true;
-        }
-        return false;
+        return DTypes.Project_Status.DELETED.toString().equalsIgnoreCase(project.getStatus());
     }
 
 

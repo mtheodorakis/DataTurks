@@ -1,25 +1,19 @@
 package bonsai.email;
 
 import bonsai.Utils.CommonUtils;
-import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
-import bonsai.dropwizard.dao.*;
 import bonsai.dropwizard.dao.d.DProjects;
 import bonsai.dropwizard.dao.d.DUsers;
-import bonsai.security.FirebaseSignIn;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simpleemail.model.*;
-import com.restfb.types.ads.Campaign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by mohan on 20/6/17.
@@ -81,7 +75,7 @@ public class EmailSender {
             return;
         }
 
-        Destination destination = new Destination().withToAddresses(new String[] { to });
+        Destination destination = new Destination().withToAddresses(to);
         // Create the subject and body of the message.
         Content subject = new Content().withData(subjectText);
         Body body = new Body();

@@ -2,19 +2,13 @@ package dataturks.aws;
 
 import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.dao.d.DProjects;
-import bonsai.email.ScheduledEmails;
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import dataturks.DConstants;
-
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.Bucket;
-import dataturks.DataUploadHandler;
 import dataturks.Validations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,16 +20,15 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.*;
 
 public class S3Handler {
 
-    private AmazonS3 s3;
+    private final AmazonS3 s3;
     private static final Logger LOG = LoggerFactory.getLogger(S3Handler.class);
-    private static S3Handler instance = new S3Handler();
+    private static final S3Handler instance = new S3Handler();
     private static ExecutorService executorService;
 
     private S3Handler(){

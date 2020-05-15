@@ -1,6 +1,5 @@
 package bonsai.security;
 
-import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
 import bonsai.exceptions.AuthException;
 import bonsai.sa.EventsLogger;
@@ -23,9 +22,7 @@ public class LoginAuth {
     public static boolean isUserIdValid(String userId, String token) {
         if (userId != null && token != null) {
             String userIdFromToken = FirebaseSignIn.getUserId(token);
-            if (userId != null && userIdFromToken != null && userId.equalsIgnoreCase(userIdFromToken)) {
-                return true;
-            }
+            return userId != null && userIdFromToken != null && userId.equalsIgnoreCase(userIdFromToken);
         }
         return false;
     }
@@ -35,9 +32,7 @@ public class LoginAuth {
     public static boolean isDataturksUserIdValid(String userId, String token) {
         if (userId != null && token != null) {
             String userIdFromToken = FirebaseDataturksSignIn.getUserId(token);
-            if (userId != null && userIdFromToken != null && userId.equalsIgnoreCase(userIdFromToken)) {
-                return true;
-            }
+            return userId != null && userIdFromToken != null && userId.equalsIgnoreCase(userIdFromToken);
         }
         return false;
     }

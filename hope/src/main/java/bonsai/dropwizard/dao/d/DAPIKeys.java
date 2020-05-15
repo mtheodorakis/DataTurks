@@ -29,7 +29,7 @@ public class DAPIKeys implements IDdbPojo{
 
     private String keyValue;
     private String secret;
-    private String status = DTypes.APIKey_Status.NONE.toString();;
+    private String status = DTypes.APIKey_Status.NONE.toString();
 
     public DAPIKeys(){}
 

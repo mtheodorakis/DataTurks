@@ -3,7 +3,6 @@ package dataturks.security;
 
 import bonsai.exceptions.AuthException;
 import bonsai.sa.EventsLogger;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
@@ -20,10 +19,10 @@ public class InternalLoginAuth {
     public static int UID_LENGTH = 28;
     public static int TOKEN_LENGTH = 64;
 
-    private  static char[] possibleCharacters = (new String("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")).toCharArray();
+    private  static final char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").toCharArray();
 
-    private static InternalLoginAuth instance = new InternalLoginAuth();
-    private Map<String, String> tokenCache = new ConcurrentHashMap<>();
+    private static final InternalLoginAuth instance = new InternalLoginAuth();
+    private final Map<String, String> tokenCache = new ConcurrentHashMap<>();
 
     private InternalLoginAuth() {
     }

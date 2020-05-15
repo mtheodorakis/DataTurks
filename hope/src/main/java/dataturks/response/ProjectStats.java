@@ -1,7 +1,5 @@
 package dataturks.response;
 
-import dataturks.DTypes;
-
 public class ProjectStats {
     public String id;
 

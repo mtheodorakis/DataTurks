@@ -1,28 +1,22 @@
 package dataturks;
 
-import bonsai.Constants;
-import bonsai.Utils.CommonUtils;
 import bonsai.config.AppConfig;
-import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.dao.d.DHits;
 import bonsai.dropwizard.dao.d.DHitsResult;
 import bonsai.dropwizard.dao.d.DProjects;
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import dataturks.response.UploadResponse;
-//import netscape.javascript.JSObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+//import netscape.javascript.JSObject;
 
 public class DataDownloadHandler {
-    private static JsonStringEncoder e = JsonStringEncoder.getInstance();
+    private static final JsonStringEncoder e = JsonStringEncoder.getInstance();
 
     private static final Logger LOG = LoggerFactory.getLogger(DataDownloadHandler.class);
 

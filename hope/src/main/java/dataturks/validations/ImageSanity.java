@@ -7,7 +7,6 @@ import bonsai.dropwizard.dao.d.DProjects;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.google.gson.JsonArray;
 import dataturks.DConstants;
 
 import java.util.*;
@@ -79,8 +78,8 @@ public class ImageSanity {
                                         " in  project2 = (" + n2.get("imageWidth") + ", " + n2.get("imageHeight") + ")");
                                 continue;
                             }
-                            if (((ArrayNode)n1.get("points")).size() != 4 ||
-                                    ((ArrayNode)n2.get("points")).size() != 4) {
+                            if (n1.get("points").size() != 4 ||
+                                    n2.get("points").size() != 4) {
                                 output.add("\nError : for " + image + ": Number of points != 4");
                                 continue;
                             }
@@ -169,19 +168,15 @@ def bb_intersection_over_union(boxA, boxB):
 
     public static List<Double> getAllPoints(ArrayNode points, boolean x) {
         int index = x? 0 : 1;
-        return Arrays.asList(new Double[] { ((ArrayNode)points.get(0)).get(index).asDouble(),
-                ((ArrayNode)points.get(1)).get(index).asDouble(),
-                ((ArrayNode)points.get(2)).get(index).asDouble(),
-                ((ArrayNode)points.get(3)).get(index).asDouble()});
+        return Arrays.asList(points.get(0).get(index).asDouble(),
+                points.get(1).get(index).asDouble(),
+                points.get(2).get(index).asDouble(),
+                points.get(3).get(index).asDouble());
     }
 
 
     public static boolean sameDimentions(JsonNode n1, JsonNode n2) {
-        if (n1.get("imageWidth").asInt() == n2.get("imageWidth").asInt() && n1.get("imageHeight").asInt() == n2.get("imageHeight").asInt()) {
-            return true;
-        }
-
-        return false;
+        return n1.get("imageWidth").asInt() == n2.get("imageWidth").asInt() && n1.get("imageHeight").asInt() == n2.get("imageHeight").asInt();
     }
 
     public static void main(String[] args) {

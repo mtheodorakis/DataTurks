@@ -5,17 +5,11 @@ import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.dao.DBConfigEntry;
 import bonsai.dropwizard.dao.DBConfigEntryDAO;
-import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataturks.DataUploadHandler;
 import dataturks.response.LicenseInfo;
-import io.dropwizard.client.HttpClientBuilder;
-import io.dropwizard.client.HttpClientConfiguration;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -91,10 +85,7 @@ public class LicenseHandler {
 
     private static boolean isSameLicenseAlreadyPresent(String key) {
         String licenseKey = LicenseHandler.getLicenseKey();
-        if (licenseKey != null && key.contentEquals(licenseKey)) {
-            return true;
-        }
-        return false;
+        return licenseKey != null && key.contentEquals(licenseKey);
     }
 
     private static String getLicenseKey() {
@@ -253,9 +244,7 @@ public class LicenseHandler {
     //is the passed license equal to currently active license?
     public static boolean isCurrentLicense(String license) {
         if (license != null && !license.isEmpty()) {
-            if (license.contentEquals(getLicenseKey())) {
-                return true;
-            }
+            return license.contentEquals(getLicenseKey());
         }
         return false;
     }

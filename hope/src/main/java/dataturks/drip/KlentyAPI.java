@@ -16,12 +16,10 @@ import io.dropwizard.util.Duration;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +29,7 @@ import java.util.Map;
 public class KlentyAPI {
     private static final Logger LOG = LoggerFactory.getLogger(KlentyAPI.class);
 
-    private static String klentyAPI = "https://app.klenty.com/apis/v1/user/mohan@dataturks.com";
+    private static final String klentyAPI = "https://app.klenty.com/apis/v1/user/mohan@dataturks.com";
 
     private static HttpClient httpClient = null;
     public static void init() {
@@ -80,11 +78,11 @@ public class KlentyAPI {
 
         ObjectMapper mapper = AppConfig.getInstance().getObjectMapper();
         ObjectNode dataNode = mapper.createObjectNode();
-        ((ObjectNode) dataNode).put("Email", user.getEmail().trim());
-        ((ObjectNode) dataNode).put("FirstName", CommonUtils.getUserFirstName(user)); //End index is inclusive.
-        ((ObjectNode) dataNode).put("LastName", "");
-        ((ObjectNode) dataNode).put("FullName", user.getFirstName());
-        ((ObjectNode) dataNode).put("Title", "");
+        dataNode.put("Email", user.getEmail().trim());
+        dataNode.put("FirstName", CommonUtils.getUserFirstName(user)); //End index is inclusive.
+        dataNode.put("LastName", "");
+        dataNode.put("FullName", user.getFirstName());
+        dataNode.put("Title", "");
 
         String jsonData = mapper.writeValueAsString(dataNode);
         StringEntity requestEntity = new StringEntity(

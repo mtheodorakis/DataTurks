@@ -5,7 +5,6 @@ import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.dao.d.DProjectUsers;
 import bonsai.dropwizard.dao.d.DProjectUsersDAO;
 import bonsai.dropwizard.dao.d.DUsers;
-import bonsai.email.ScheduledEmails;
 import dataturks.DConstants;
 import dataturks.DTypes;
 import org.slf4j.Logger;

@@ -8,15 +8,11 @@ import bonsai.dropwizard.dao.d.*;
 import bonsai.email.EmailSender;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.google.gson.JsonArray;
 import dataturks.cache.CachedItems;
-import dataturks.jobs.TopProjects;
 import dataturks.license.LicenseHandler;
 import dataturks.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ucar.nc2.grib.TimeCoordUnion;
 
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.WebApplicationException;
@@ -382,7 +378,7 @@ public class Controlcenter {
             if (node != null) {
                 if (node.isArray()) {
                     labels = new ArrayList<>();
-                    for (JsonNode item : (ArrayNode) node) {
+                    for (JsonNode item : node) {
                         labels.addAll(getLabels(item));
                     }
                 } else {
@@ -406,7 +402,7 @@ public class Controlcenter {
             List<String> labels = new ArrayList<>();
 
             if (labelNode.isArray()) {
-                for (JsonNode item : (ArrayNode) labelNode) {
+                for (JsonNode item : labelNode) {
                     labels.add(item.textValue());
                 }
             }
@@ -453,7 +449,7 @@ public class Controlcenter {
                 }
             } //old way when we did not pass status in the post call.
             else {
-                boolean skipped =  reqObj.getReqMap().containsKey("skipped") ? true: false;
+                boolean skipped = reqObj.getReqMap().containsKey("skipped");
                 if (skipped) {
                     hitStatus = DConstants.HIT_STATUS_SKIPPED;
                 }
@@ -590,7 +586,7 @@ public class Controlcenter {
     }
 
     public static ProjectStats getProjectStatsInternal(DReqObj reqObj, DProjects project) {
-        return getProjectStatsForHITStatus(reqObj, project, Arrays.asList(new String[] {DConstants.HIT_STATUS_DONE, DConstants.HIT_STATUS_PRE_TAGGED}));
+        return getProjectStatsForHITStatus(reqObj, project, Arrays.asList(DConstants.HIT_STATUS_DONE, DConstants.HIT_STATUS_PRE_TAGGED));
     }
 
     public static ProjectStats getProjectStatsForHITStatus(DReqObj reqObj, DProjects project, List<String> hitStatuses) {

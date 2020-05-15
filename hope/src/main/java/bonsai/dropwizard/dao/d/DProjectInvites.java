@@ -1,8 +1,6 @@
 package bonsai.dropwizard.dao.d;
 
 
-import dataturks.DConstants;
-
 import javax.persistence.*;
 import java.util.Date;
 

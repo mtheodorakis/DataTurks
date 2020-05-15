@@ -3,18 +3,13 @@ package bonsai.email;
 import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
 import bonsai.dropwizard.dao.d.*;
-import bonsai.sa.Events;
-import bonsai.sa.EventsLogger;
 import dataturks.Controlcenter;
-import dataturks.DReqObj;
 import dataturks.DTypes;
 import dataturks.Validations;
 import dataturks.drip.DripFlows;
 import dataturks.response.ProjectDetails;
-import dataturks.response.UserHome;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -27,13 +22,13 @@ public class ScheduledEmails {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScheduledEmails.class);
 
-    private static long ONE_DAY_MILISEC = 24*60*60*1000;
+    private static final long ONE_DAY_MILISEC = 24*60*60*1000;
 
     private static volatile Date lastRunDate;
 
     private ScheduledExecutorService executorService;
 
-    private static ScheduledEmails instance = new ScheduledEmails();
+    private static final ScheduledEmails instance = new ScheduledEmails();
 
     private ScheduledEmails(){
         lastRunDate = new Date();

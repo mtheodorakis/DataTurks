@@ -2,9 +2,7 @@ package dataturks;
 
 import bonsai.config.AppConfig;
 import bonsai.config.DBBasedConfigs;
-
 import bonsai.dropwizard.dao.d.*;
-import bonsai.dropwizard.resources.DataturksEndpoint;
 import dataturks.aws.S3Handler;
 import dataturks.cache.CacheWrapper;
 import dataturks.license.LicenseHandler;
@@ -204,7 +202,7 @@ public class DUtils {
 
     public static String generateAPISecret() {
         int randomStrLength = DBBasedConfigs.getConfig("dAPIKeyLength", Integer.class, 64);
-        char[] possibleCharacters = (new String("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")).toCharArray();
+        char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").toCharArray();
         String randomStr = RandomStringUtils.random( randomStrLength, 0, possibleCharacters.length-1, false, false, possibleCharacters, new SecureRandom() );
 
         return randomStr;
@@ -248,22 +246,18 @@ public class DUtils {
 
     static boolean isImageProject(ProjectDetails details) {
         if (details != null) {
-            if (DTypes.Project_Task_Type.IMAGE_CLASSIFICATION == details.getTask_type() ||
+            return DTypes.Project_Task_Type.IMAGE_CLASSIFICATION == details.getTask_type() ||
                     DTypes.Project_Task_Type.IMAGE_POLYGON_BOUNDING_BOX == details.getTask_type() ||
-                    DTypes.Project_Task_Type.IMAGE_BOUNDING_BOX == details.getTask_type()||
-                    DTypes.Project_Task_Type.IMAGE_POLYGON_BOUNDING_BOX_V2 == details.getTask_type()) {
-                return true;
-            }
+                    DTypes.Project_Task_Type.IMAGE_BOUNDING_BOX == details.getTask_type() ||
+                    DTypes.Project_Task_Type.IMAGE_POLYGON_BOUNDING_BOX_V2 == details.getTask_type();
         }
         return false;
     }
 
     static boolean isVideoProject(ProjectDetails details) {
         if (details != null) {
-            if (DTypes.Project_Task_Type.VIDEO_BOUNDING_BOX == details.getTask_type() ||
-                    DTypes.Project_Task_Type.VIDEO_CLASSIFICATION == details.getTask_type()) {
-                return true;
-            }
+            return DTypes.Project_Task_Type.VIDEO_BOUNDING_BOX == details.getTask_type() ||
+                    DTypes.Project_Task_Type.VIDEO_CLASSIFICATION == details.getTask_type();
         }
         return false;
     }
@@ -273,15 +267,12 @@ public class DUtils {
     }
 
     public static boolean isValidHitStatus(String status) {
-        if (DConstants.HIT_STATUS_SKIPPED.equalsIgnoreCase(status) ||
+        return DConstants.HIT_STATUS_SKIPPED.equalsIgnoreCase(status) ||
                 DConstants.HIT_STATUS_DONE.equalsIgnoreCase(status) ||
                 DConstants.HIT_STATUS_NOT_DONE.equalsIgnoreCase(status) ||
                 DConstants.HIT_STATUS_DELETED.equalsIgnoreCase(status) ||
                 DConstants.HIT_STATUS_PRE_TAGGED.equalsIgnoreCase(status) ||
-                DConstants.HIT_STATUS_REQUEUED.equalsIgnoreCase(status) ) {
-            return true;
-        }
-        return false;
+                DConstants.HIT_STATUS_REQUEUED.equalsIgnoreCase(status);
     }
 
     public static DUsers getUser(String uid) {
@@ -317,9 +308,7 @@ public class DUtils {
                 labelsUsed += item.getLabelsDone();
             }
 
-            if (labelsUsed >= labelCount) {
-                return false;
-            }
+            return labelsUsed < labelCount;
         }
 
         return true;

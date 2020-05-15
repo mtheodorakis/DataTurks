@@ -20,7 +20,7 @@ import java.util.Map;
 //A heavy operation which calculates top projects, updates their description and returns.
 public class TopProjects {
 
-    private static Logger LOG = LoggerFactory.getLogger(TopProjects.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TopProjects.class);
 
     public static OrgProjects getAllTopProjects() {
 

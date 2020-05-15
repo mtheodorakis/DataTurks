@@ -1,0 +1,2 @@
+CREATE USER dataturks@'%' IDENTIFIED BY '12345';
+GRANT ALL PRIVILEGES ON `hope`.* TO 'dataturks'@'%';FLUSH PRIVILEGES;

@@ -1,0 +1,51 @@
+version: '2.4'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'rootpass'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db-vol:/var/lib/mysql
+      - ./custom_mysql_scripts/:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: "mysqlshow --password=$$MYSQL_ROOT_PASSWORD 2> /dev/null | grep -q hope"
+      timeout: 20s
+      retries: 10
+
+  dataturks-be:
+    build:
+      context: ./hope
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - '9090'
+    volumes:
+      - ./custom_onprem.yml:/dataturks-be/onprem.yml
+    healthcheck:
+      test: "curl -s -o /dev/null -w '%{http_code}' http://localhost:9090/dtAPI | grep 404"
+      timeout: 20s
+      retries: 10
+
+
+  dataturks-fe:
+    build:
+      context: ./bazaar
+    restart: always
+    depends_on:
+      dataturks-be:
+        condition: service_healthy
+    expose:
+      - '3000-3001'
+      - '3030'
+    ports:
+      - '80:80'
+
+volumes:
+  db-vol:

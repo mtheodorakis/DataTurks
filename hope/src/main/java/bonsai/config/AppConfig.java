@@ -1,22 +1,21 @@
 package bonsai.config;
 
-import bonsai.App;
 import bonsai.dropwizard.DbConfig;
-import bonsai.dropwizard.dao.*;
+import bonsai.dropwizard.dao.DBConfigEntryDAO;
+import bonsai.dropwizard.dao.KeyValueItemDAO;
 import bonsai.dropwizard.dao.d.*;
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.LoggerFactory;
-
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by mohan.gupta on 04/04/17.
  */
 public class AppConfig {
 
-    private static Logger LOG = LoggerFactory.getLogger(AppConfig.class);
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger LOG = LoggerFactory.getLogger(AppConfig.class);
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private DbConfig dbConfig = null;
 
 
@@ -44,7 +43,7 @@ public class AppConfig {
 
     private final MetricRegistry metrics = new MetricRegistry();
 
-    private static AppConfig instance = new AppConfig();
+    private static final AppConfig instance = new AppConfig();
 
     private AppConfig(){
     }

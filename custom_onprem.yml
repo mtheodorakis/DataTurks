@@ -1,0 +1,49 @@
+host: db
+port: 2020
+user: dataturks
+password: 12345
+dbName: hope
+
+firebaseCredFilePath: ./keys/bonsaiFirebase.json
+
+# Database settings.
+database:
+    # the name of the JDBC driver, mysql in our case
+    driverClass: com.mysql.jdbc.Driver
+    # the username
+    user: dataturks
+    # the password
+    password: 12345
+    # the JDBC URL; the database is called DWGettingStarted
+    url: jdbc:mysql://db:3306/hope
+
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+logging:
+    # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: DEBUG
+
+  loggers:
+    bonsai : DEBUG
+    org.hibernate.SQL: ALL
+
+  appenders:
+  - type: file
+    currentLogFilename: ./logs/root.log
+    archivedLogFilenamePattern: ./logs/root-%d.log.gz
+    archivedFileCount: 2
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 9090
+  requestLog:
+    appenders:
+      - type: file
+        currentLogFilename: ./logs/access.log
+        threshold: ALL
+        archive: true
+        archivedLogFilenamePattern: ./logs/access.%d.log.gz
+        archivedFileCount: 2
+
