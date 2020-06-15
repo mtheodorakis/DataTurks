@@ -248,7 +248,7 @@ VALUES
 
 INSERT INTO `configs` (`key`, `value`, `type`)
 VALUES
-  ('dUploadStoragePath', '/home/dataturks/bazaar/uploads', 'string');
+  ('dUploadStoragePath', '/home/dataturks/dataturks-fe/uploads', 'string');
 
 INSERT INTO `configs` (`key`, `value`, `type`)
 VALUES

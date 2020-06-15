@@ -15,7 +15,7 @@ database:
     # the password
     password: 12345
     # the JDBC URL; the database is called DWGettingStarted
-    url: jdbc:mysql://db:3306/hope
+    url: jdbc:mysql://dataturks-db:3306/hope
 
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
