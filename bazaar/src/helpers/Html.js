@@ -49,7 +49,7 @@ export default class Html extends Component {
         <body>
           <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
           <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(state)};`}} charSet="UTF-8"/>
-            <script src={assets.javascript.main} charSet="UTF-8"/>
+            <script type="module" src={assets.javascript.main} charSet="UTF-8"/>
           <script src="https://cdn.ravenjs.com/3.24.0/raven.min.js"
             crossOrigin="anonymous"></script>
         </body>
