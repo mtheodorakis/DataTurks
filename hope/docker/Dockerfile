@@ -19,10 +19,10 @@ WORKDIR $BASE_DIR
 
 # Install basics
 RUN apt-get update && \
-	apt-get -y install mysql-server && \
+	apt-get -y install default-mysql-server && \
 	apt-get -y install apache2 && \
-	apt-get install -y php7.0 && \
-	apt-get install -y libapache2-mod-php7.0 && \
+	apt-get install -y php7.3 && \
+	apt-get install -y libapache2-mod-php7.3 && \
 	apt-get clean
 
 
@@ -31,7 +31,7 @@ COPY $LOCAL_DOCKER_DIR/onprem-dataturks.com.conf /etc/apache2/sites-available/00
 
 
 RUN a2enmod proxy_http && \
-    a2enmod php7.0 && \
+    a2enmod php7.3 && \
     a2ensite onprem-dataturks.com.conf
 
 
@@ -47,11 +47,11 @@ RUN chmod +x ./init.sh && \
 
 #Install Node 8
 RUN apt-get -y install build-essential && \
-	curl -sL https://deb.nodesource.com/setup_8.x | bash && \
-	apt-get install --yes nodejs && \
+	curl -sL https://deb.nodesource.com/setup_10.x | bash && \
+	apt-get install --yes nodejs nodejs-legacy && \
 	node -v && \
 	npm -v && \ 
-	npm i -g nodemon && \
+	npm i -g --unsafe-perm nodemon grpc node-gyp gulp@4 && \
 	nodemon -v && \
 	apt-get clean
 
@@ -84,18 +84,19 @@ COPY $LOCAL_BAZAAR_DIR/onprem.php $BAZAR_PARENT_DIR/bazaar/onprem.php
 #allow local uploads.
 WORKDIR $BAZAR_PARENT_DIR/bazaar
 RUN rm -rf $BAZAR_PARENT_DIR/bazaar/uploads && \
+#	mkdir $BAZAR_PARENT_DIR/bazaar/uploads
 	mkdir $BAZAR_PARENT_DIR/bazaar/uploads && \
-	npm install && \
+	npm install --unsafe-perm && \
 	npm run build-onprem && \
 	npm prune
 
 
 
 #remove source.
-RUN rm -rf $BAZAR_PARENT_DIR/bazaar/src/components && \
-	rm -rf $BAZAR_PARENT_DIR/bazaar/src/containers && \
-	rm -rf $BAZAR_PARENT_DIR/bazaar/src/theme && \
-	rm -rf $BAZAR_PARENT_DIR/bazaar/src/utils
+#RUN rm -rf $BAZAR_PARENT_DIR/bazaar/src/components && \
+#	rm -rf $BAZAR_PARENT_DIR/bazaar/src/containers && \
+#	rm -rf $BAZAR_PARENT_DIR/bazaar/src/theme && \
+#	rm -rf $BAZAR_PARENT_DIR/bazaar/src/utils
 
 
 #set permissions for apache readable.
@@ -110,10 +111,11 @@ EXPOSE 3001
 EXPOSE 80
 
 
-COPY $LOCAL_HOPE_DIR/target/dataturks-1.0-SNAPSHOT.jar $BASE_DIR/dataturks-1.0-SNAPSHOT.jar
+#COPY $LOCAL_HOPE_DIR/target/dataturks-1.0-SNAPSHOT.jar $BASE_DIR/dataturks-1.0-SNAPSHOT.jar
 COPY $LOCAL_HOPE_DIR/onprem.yml $BASE_DIR/onprem.yml
 
 COPY $LOCAL_DOCKER_DIR/startup.sh $BASE_DIR/startup.sh
 RUN chmod +x ./startup.sh
-CMD ./startup.sh > ./startup_log.log
+
+#CMD ./startup.sh > ./startup_log.log
 
